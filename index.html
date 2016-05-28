@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Analysis of Transmission Factors on MPG</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Analysis of Transmission Factors on MPG">
+  <meta name="author" content="Trey Beeman">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Analysis of Transmission Factors on MPG</h1>
+    <h2></h2>
+    <p>Trey Beeman<br/>Data Scientist</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Executive Summary</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>We will examine the <code>mtcars</code> data with a goal to fit a linear model to determine if automatic or manual transmission is better for fuel efficiency (&quot;mpg&quot;) and we will quantify the difference should it exist.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Data Exploration and Preparation</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">data(mtcars); mtcars$am &lt;- factor(mtcars$am)
+mtcars$vs &lt;- factor(mtcars$vs)
+mtcars$gear &lt;- factor(mtcars$gear)
+mtcars$cyl &lt;- factor(mtcars$cyl); mtcars$carb &lt;- factor(mtcars$carb)
+</code></pre>
+
+<p>Data Variables: mileage (<code>mpg</code>), number of cylinders (<code>cyl</code>), 
+displacement (<code>disp</code>), horse power (<code>hp</code>), rear axle ratio (<code>drat</code>), 
+weight (<code>wt</code>), 1/4 mile time (<code>qsec</code>), cylinder arrangement (<code>vs</code>) , transmission type (<code>am</code>), number of forward gears (<code>gear</code>) and number of carburetors (<code>carb</code>) for 32 different vehicle models.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Str() of the Data</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">str(mtcars)
+</code></pre>
+
+<pre><code>## &#39;data.frame&#39;:    32 obs. of  11 variables:
+##  $ mpg : num  21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...
+##  $ cyl : Factor w/ 3 levels &quot;4&quot;,&quot;6&quot;,&quot;8&quot;: 2 2 1 2 3 2 3 1 1 2 ...
+##  $ disp: num  160 160 108 258 360 ...
+##  $ hp  : num  110 110 93 110 175 105 245 62 95 123 ...
+##  $ drat: num  3.9 3.9 3.85 3.08 3.15 2.76 3.21 3.69 3.92 3.92 ...
+##  $ wt  : num  2.62 2.88 2.32 3.21 3.44 ...
+##  $ qsec: num  16.5 17 18.6 19.4 17 ...
+##  $ vs  : Factor w/ 2 levels &quot;0&quot;,&quot;1&quot;: 1 1 2 2 1 2 1 2 2 2 ...
+##  $ am  : Factor w/ 2 levels &quot;0&quot;,&quot;1&quot;: 2 2 2 1 1 1 1 1 1 1 ...
+##  $ gear: Factor w/ 3 levels &quot;3&quot;,&quot;4&quot;,&quot;5&quot;: 2 2 2 1 1 1 1 2 2 2 ...
+##  $ carb: Factor w/ 6 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 4 4 1 1 2 1 4 2 2 4 ...
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Boxplot Automatic v. Manual Transmission</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="assets/fig/data%20exploration-1.png" alt="plot of chunk data exploration"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>Model 1: Automatic Transmission v. Manual and MPG</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">mpg_fit1 &lt;- lm(mpg ~ am, mtcars)
+summary(mpg_fit1)$r.squared
+</code></pre>
+
+<pre><code>## [1] 0.3597989
+</code></pre>
+
+<p>\(R^{2}\) indicates this model does deficient in explaining the variance in the data around its mean.  </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>Model 2: Step function to find most important variables</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>We will use the <code>step()</code> function to find a model with an improved \(R^{2}\) value.  The <code>step()</code> function will indicate the best fit using the AIC method.  It will check each variable in the model to find one with the best fit according to the AIC value.  The final model is below.</p>
+
+<pre><code class="r">best &lt;- step(lm(mpg~.,mtcars), direction = &quot;both&quot;)
+</code></pre>
+
+<pre><code class="r">summary(best)$call
+</code></pre>
+
+<pre><code>## lm(formula = mpg ~ cyl + hp + wt + am, data = mtcars)
+</code></pre>
+
+<pre><code class="r">mpg_fit2 &lt;- lm(mpg ~ wt + qsec + am, mtcars)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>Results from the Step() Function</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code>## 
+## Call:
+## lm(formula = mpg ~ wt + qsec + am, data = mtcars)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.4811 -1.5555 -0.7257  1.4110  4.6610 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   9.6178     6.9596   1.382 0.177915    
+## wt           -3.9165     0.7112  -5.507 6.95e-06 ***
+## qsec          1.2259     0.2887   4.247 0.000216 ***
+## am1           2.9358     1.4109   2.081 0.046716 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 2.459 on 28 degrees of freedom
+## Multiple R-squared:  0.8497, Adjusted R-squared:  0.8336 
+## F-statistic: 52.75 on 3 and 28 DF,  p-value: 1.21e-11
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>Comments on the results of the Step() function</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">summary(mpg_fit2)$adj.r.squared
+</code></pre>
+
+<pre><code>## [1] 0.8335561
+</code></pre>
+
+<p>The model returned by the <code>step()</code> function (above), gives an Adjusted \(R^{2}\) indicating that this model explains 83% of the variance of the data around its mean, so this model is much stronger than the earlier fit.  Also, by comparing the residual plots in Figure 2 and Figure 3, we can see there is more heteroskedacity in this model.  Figure 3 indicates several outliers  Chrysler Imperial, Fiat 128 and Toyota Corolla which we may wish to exclude.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>ANOVA on the models</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Coefficients are statistically significant compared to the model that does not include them.</p>
+
+<pre><code class="r">mpg_fit1.a &lt;- lm(mpg ~ am + qsec, mtcars)
+anova(mpg_fit1, mpg_fit1.a, mpg_fit2)
+</code></pre>
+
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: mpg ~ am
+## Model 2: mpg ~ am + qsec
+## Model 3: mpg ~ wt + qsec + am
+##   Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
+## 1     30 720.90                                  
+## 2     29 352.63  1    368.26 60.911 1.679e-08 ***
+## 3     28 169.29  1    183.35 30.326 6.953e-06 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>Residual Plot 1</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="assets/fig/residual%201-1.png" alt="plot of chunk residual 1"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>Residual Plot 2</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="assets/fig/residual%202-1.png" alt="plot of chunk residual 2"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2>Comments on Residual Plots</h2>
+  </hgroup>
+  <article data-timings="">
+    <ol>
+<li><p>Comparing Figure 2 and Figure 3 - more heteroskedacity in the best fit from the <code>Step()</code> function.</p></li>
+<li><p>Figure 3 indicates several outliers Chrysler Imperial, Fiat 128 and Toyota Corolla which we may wish to exclude.</p></li>
+</ol>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h3>Conclusions</h3>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">summary(mpg_fit2)$coefficients
+</code></pre>
+
+<pre><code>##              Estimate Std. Error   t value     Pr(&gt;|t|)
+## (Intercept)  9.617781  6.9595930  1.381946 1.779152e-01
+## wt          -3.916504  0.7112016 -5.506882 6.952711e-06
+## qsec         1.225886  0.2886696  4.246676 2.161737e-04
+## am1          2.935837  1.4109045  2.080819 4.671551e-02
+</code></pre>
+
+<p>1.)Manual transmission contributes to lower gas mileage</p>
+
+<ol>
+<li><p>The <code>am1</code> factor is significant at \(\alpha = .05\) confirming the relationship.</p></li>
+<li><p>With weight (<code>wt</code>) and 1/4 mile time (<code>qsec</code>) held constant, average of 2.9358 increase in mpg when using a manual transmission.</p></li>
+<li><p>Significant with 95% confidence.</p></li>
+</ol>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-14" style="background:;">
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Executive Summary'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Data Exploration and Preparation'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Str() of the Data'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Boxplot Automatic v. Manual Transmission'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Model 1: Automatic Transmission v. Manual and MPG'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='Model 2: Step function to find most important variables'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Results from the Step() Function'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Comments on the results of the Step() function'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='ANOVA on the models'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='Residual Plot 1'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='Residual Plot 2'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='Comments on Residual Plots'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='Conclusions'>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='NA'>
+         14
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
