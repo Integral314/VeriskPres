@@ -74,11 +74,11 @@ summary(mpg_fit1)$r.squared
 ## [1] 0.3597989
 ```
 
-$R^{2}$ indicates this model does deficient in explaining the variance in the data around its mean.  
+$R^{2}$ indicates this model is deficient in explaining the variance in the data around its mean.  
 
 ---
 
-## Model 2: Step function to find most important variables
+## Model 2: Step Function to find Critical Variables
 
 We will use the `step()` function to find a model with an improved $R^{2}$ value.  The `step()` function will indicate the best fit using the AIC method.  It will check each variable in the model to find one with the best fit according to the AIC value.  The final model is below.
 
@@ -141,7 +141,7 @@ summary(mpg_fit2)$adj.r.squared
 ## [1] 0.8335561
 ```
 
-The model returned by the `step()` function (above), gives an Adjusted $R^{2}$ indicating that this model explains 83% of the variance of the data around its mean, so this model is much stronger than the earlier fit.  Also, by comparing the residual plots in Figure 2 and Figure 3, we can see there is more heteroskedacity in this model.  Figure 3 indicates several outliers  Chrysler Imperial, Fiat 128 and Toyota Corolla which we may wish to exclude.
+The model returned by the `step()` function (above), gives an Adjusted $R^{2}$ indicating that this model explains 83% of the variance of the data around its mean, so this model is much stronger than the earlier fit.
 
 ---
 
@@ -206,10 +206,10 @@ summary(mpg_fit2)$coefficients
 ## am1          2.935837  1.4109045  2.080819 4.671551e-02
 ```
 
-1.)Manual transmission contributes to lower gas mileage
+1. Manual transmission contributes to lower gas mileage
 
 2. The `am1` factor is significant at $\alpha = .05$ confirming the relationship.
 
 3. With weight (`wt`) and 1/4 mile time (`qsec`) held constant, average of 2.9358 increase in mpg when using a manual transmission.
 
-4. Significant with 95% confidence.
+4. Coefficients are significant with 95% confidence.

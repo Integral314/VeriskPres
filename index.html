@@ -120,7 +120,7 @@ summary(mpg_fit1)$r.squared
 <pre><code>## [1] 0.3597989
 </code></pre>
 
-<p>\(R^{2}\) indicates this model does deficient in explaining the variance in the data around its mean.  </p>
+<p>\(R^{2}\) indicates this model is deficient in explaining the variance in the data around its mean.  </p>
 
   </article>
   <!-- Presenter Notes -->
@@ -128,7 +128,7 @@ summary(mpg_fit1)$r.squared
 
 <slide class="" id="slide-6" style="background:;">
   <hgroup>
-    <h2>Model 2: Step function to find most important variables</h2>
+    <h2>Model 2: Step Function to find Critical Variables</h2>
   </hgroup>
   <article data-timings="">
     <p>We will use the <code>step()</code> function to find a model with an improved \(R^{2}\) value.  The <code>step()</code> function will indicate the best fit using the AIC method.  It will check each variable in the model to find one with the best fit according to the AIC value.  The final model is below.</p>
@@ -191,7 +191,7 @@ summary(mpg_fit1)$r.squared
 <pre><code>## [1] 0.8335561
 </code></pre>
 
-<p>The model returned by the <code>step()</code> function (above), gives an Adjusted \(R^{2}\) indicating that this model explains 83% of the variance of the data around its mean, so this model is much stronger than the earlier fit.  Also, by comparing the residual plots in Figure 2 and Figure 3, we can see there is more heteroskedacity in this model.  Figure 3 indicates several outliers  Chrysler Imperial, Fiat 128 and Toyota Corolla which we may wish to exclude.</p>
+<p>The model returned by the <code>step()</code> function (above), gives an Adjusted \(R^{2}\) indicating that this model explains 83% of the variance of the data around its mean, so this model is much stronger than the earlier fit.</p>
 
   </article>
   <!-- Presenter Notes -->
@@ -276,12 +276,11 @@ anova(mpg_fit1, mpg_fit1.a, mpg_fit2)
 ## am1          2.935837  1.4109045  2.080819 4.671551e-02
 </code></pre>
 
-<p>1.)Manual transmission contributes to lower gas mileage</p>
-
 <ol>
+<li><p>Manual transmission contributes to lower gas mileage</p></li>
 <li><p>The <code>am1</code> factor is significant at \(\alpha = .05\) confirming the relationship.</p></li>
 <li><p>With weight (<code>wt</code>) and 1/4 mile time (<code>qsec</code>) held constant, average of 2.9358 increase in mpg when using a manual transmission.</p></li>
-<li><p>Significant with 95% confidence.</p></li>
+<li><p>Coefficients are significant with 95% confidence.</p></li>
 </ol>
 
   </article>
@@ -324,7 +323,7 @@ anova(mpg_fit1, mpg_fit1.a, mpg_fit2)
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=6 title='Model 2: Step function to find most important variables'>
+        data-slide=6 title='Model 2: Step Function to find Critical Variables'>
          6
       </a>
     </li>
