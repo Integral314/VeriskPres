@@ -58,7 +58,7 @@ str(mtcars)
 
 ## Boxplot Automatic v. Manual Transmission
 
-![plot of chunk data exploration](assets/fig/data exploration-1.png)
+![plot of chunk data exploration](figure/data exploration-1.png)
 
 ---
 
@@ -173,13 +173,13 @@ anova(mpg_fit1, mpg_fit1.a, mpg_fit2)
 
 ## Residual Plot 1
 
-![plot of chunk residual 1](assets/fig/residual 1-1.png)
+![plot of chunk residual 1](figure/residual 1-1.png)
 
 ---
 
 ## Residual Plot 2
 
-![plot of chunk residual 2](assets/fig/residual 2-1.png)
+![plot of chunk residual 2](figure/residual 2-1.png)
 
 ---
 
@@ -191,7 +191,7 @@ anova(mpg_fit1, mpg_fit1.a, mpg_fit2)
 
 ---
 
-### Conclusions
+## Conclusions
 
 
 ```r
@@ -213,5 +213,3 @@ summary(mpg_fit2)$coefficients
 3. With weight (`wt`) and 1/4 mile time (`qsec`) held constant, average of 2.9358 increase in mpg when using a manual transmission.
 
 4. Significant with 95% confidence.
-
----

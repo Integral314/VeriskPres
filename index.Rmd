@@ -132,7 +132,7 @@ plot(mpg_fit2, which = 1, main = "Figure 3: Residual Plot fit2")
 
 ---
 
-### Conclusions
+## Conclusions
 
 ```{r coeff summaries}
 summary(mpg_fit2)$coefficients
@@ -145,5 +145,3 @@ summary(mpg_fit2)$coefficients
 3. With weight (`wt`) and 1/4 mile time (`qsec`) held constant, average of 2.9358 increase in mpg when using a manual transmission.
 
 4. Significant with 95% confidence.
-
----
