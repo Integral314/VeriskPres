@@ -58,7 +58,7 @@ str(mtcars)
 
 ## Boxplot Automatic v. Manual Transmission
 
-![plot of chunk data exploration](figure/data exploration-1.png)
+![plot of chunk data exploration](assets/fig/data exploration-1.png)
 
 ---
 
@@ -173,13 +173,13 @@ anova(mpg_fit1, mpg_fit1.a, mpg_fit2)
 
 ## Residual Plot 1
 
-![plot of chunk residual 1](figure/residual 1-1.png)
+![plot of chunk residual 1](assets/fig/residual 1-1.png)
 
 ---
 
 ## Residual Plot 2
 
-![plot of chunk residual 2](figure/residual 2-1.png)
+![plot of chunk residual 2](assets/fig/residual 2-1.png)
 
 ---
 
@@ -206,7 +206,7 @@ summary(mpg_fit2)$coefficients
 ## am1          2.935837  1.4109045  2.080819 4.671551e-02
 ```
 
-1. Manual transmission contributes to lower gas mileage
+1. Manual transmission contributes to improved gas mileage
 
 2. The `am1` factor is significant at $\alpha = .05$ confirming the relationship.
 
