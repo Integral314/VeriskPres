@@ -206,7 +206,7 @@ summary(mpg_fit2)$coefficients
 ## am1          2.935837  1.4109045  2.080819 4.671551e-02
 ```
 
-1. Manual transmission contributes to improved gas mileage
+1. Manual transmission contributes to improved gas mileage.
 
 2. The `am1` factor is significant at $\alpha = .05$ confirming the relationship.
 

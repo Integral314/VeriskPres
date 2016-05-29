@@ -138,7 +138,7 @@ plot(mpg_fit2, which = 1, main = "Figure 3: Residual Plot fit2")
 summary(mpg_fit2)$coefficients
 ```
 
-1. Manual transmission contributes to improved gas mileage
+1. Manual transmission contributes to improved gas mileage.
 
 2. The `am1` factor is significant at $\alpha = .05$ confirming the relationship.
 
